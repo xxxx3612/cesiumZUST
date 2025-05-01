@@ -1,0 +1,54 @@
+# 模型文件文件
+public/Data/
+public/Title/
+
+.DS_Store
+node_modules
+/dist
+
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Cesium演示、测试和文档文件
+public/Cesium-1.128/Apps/Sandcastle/
+public/Cesium-1.128/Apps/TimelineDemo/
+public/Cesium-1.128/Apps/CesiumViewer/
+public/Cesium-1.128/Apps/HelloWorld.html
+
+# Cesium测试文件
+public/Cesium-1.128/Specs/
+
+# Cesium第三方库中的演示和文档
+public/Cesium-1.128/ThirdParty/codemirror-5.52.0/demo/
+public/Cesium-1.128/ThirdParty/codemirror-5.52.0/doc/
+public/Cesium-1.128/ThirdParty/codemirror-5.52.0/test/
+public/Cesium-1.128/ThirdParty/dojo-release-1.10.4/demos/
+public/Cesium-1.128/ThirdParty/dojo-release-1.10.4/tests/
+public/Cesium-1.128/ThirdParty/jshint-2.13.4/tests/
+
+# Cesium开发工具和文档
+public/Cesium-1.128/scripts/
+public/Cesium-1.128/gulpfile.js
+public/Cesium-1.128/server.js
+public/Cesium-1.128/index.html
+public/Cesium-1.128/CHANGES.md
+public/Cesium-1.128/LICENSE.md
+public/Cesium-1.128/README.md
+public/Cesium-1.128/eslint.config.js
