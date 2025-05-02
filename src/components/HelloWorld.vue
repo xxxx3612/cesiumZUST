@@ -228,6 +228,8 @@ export default {
         //const tileset = await Cesium.Cesium3DTileset.fromUrl('/Data/tileset.json');
         // 远程阿里云
         const tileset = await Cesium.Cesium3DTileset.fromUrl('https://cesiumzust.oss-cn-hangzhou.aliyuncs.com/tileset.json');
+        //因为vercel服务器架设在国外，在阿里云oss控制中，需要打开公共读以及跨域设置“*GETHEAD*ETag600”
+        //const tileset = await Cesium.Cesium3DTileset.fromUrl('https://3dtile.oss-cn-hangzhou.aliyuncs.com/tileset.json'); 旧模型用于调试
         tileset.maximumScreenSpaceError = 16; //最大屏幕空间误差
         //backFaceCulling: false, //取消背面剔除
 
