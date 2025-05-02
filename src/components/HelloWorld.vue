@@ -225,9 +225,9 @@ export default {
     async LoadTileModel() { // 加载倾斜摄影模型
       try {
         // 本地
-        const tileset = await Cesium.Cesium3DTileset.fromUrl('/Data/tileset.json');
+        //const tileset = await Cesium.Cesium3DTileset.fromUrl('/Data/tileset.json');
         // 远程阿里云
-        //const tileset = await Cesium.Cesium3DTileset.fromUrl('https://cesiumzust.oss-cn-hangzhou.aliyuncs.com/tileset.json');
+        const tileset = await Cesium.Cesium3DTileset.fromUrl('https://cesiumzust.oss-cn-hangzhou.aliyuncs.com/tileset.json');
         tileset.maximumScreenSpaceError = 16; //最大屏幕空间误差
         //backFaceCulling: false, //取消背面剔除
 
@@ -268,9 +268,9 @@ export default {
     async LoadBuildingTip() { // 提示模型
       try {
         // 本地
-        const tileset = await Cesium.Cesium3DTileset.fromUrl('/Title/tileset.json');
+        //const tileset = await Cesium.Cesium3DTileset.fromUrl('/Title/tileset.json');
         // 远程阿里云
-        //const tileset = await Cesium.Cesium3DTileset.fromUrl('https://cesiumtitle.oss-cn-hangzhou.aliyuncs.com/tileset.json');
+        const tileset = await Cesium.Cesium3DTileset.fromUrl('https://cesiumtitle.oss-cn-hangzhou.aliyuncs.com/tileset.json');
         //tileset.maximumScreenSpaceError = 16; //最大屏幕空间误差
         //backFaceCulling: false, //取消背面剔除
 
