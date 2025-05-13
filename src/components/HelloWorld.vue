@@ -197,7 +197,7 @@ export default {
       try {
         await this.LoadTileModel();
         await this.LoadBuildingTip();
-        this.ShowPosition();
+        //this.ShowPosition(); //调试经纬度信息，未正确销毁，导致场景更新逻辑中断
         await this.addWater();
         await this.addBusLine(); // 公交线路
       } catch (error) {
@@ -234,25 +234,25 @@ export default {
         //backFaceCulling: false, //取消背面剔除
 
         // // 设置模型的位置，用经纬度
-         tileset.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
+        tileset.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
            Cesium.Cartesian3.fromDegrees(120.0117800036, 30.2113431735, 5)
           );
         // 等待完全加载
         await tileset.readyPromise;
 
-        // 获取包围球中心坐标（ECEF）
-        const boundingSphereCenter = tileset.boundingSphere.center;
+        // // 获取包围球中心坐标（ECEF）
+        // const boundingSphereCenter = tileset.boundingSphere.center;
 
-        // 经纬度高程
-        const cartographic = Cesium.Ellipsoid.WGS84.cartesianToCartographic(boundingSphereCenter);
-        const longitude = Cesium.Math.toDegrees(cartographic.longitude);
-        const latitude = Cesium.Math.toDegrees(cartographic.latitude);
-        const height = cartographic.height;
+        // // 经纬度高程
+        // const cartographic = Cesium.Ellipsoid.WGS84.cartesianToCartographic(boundingSphereCenter);
+        // const longitude = Cesium.Math.toDegrees(cartographic.longitude);
+        // const latitude = Cesium.Math.toDegrees(cartographic.latitude);
+        // const height = cartographic.height;
 
-        console.log('模型中心经纬度:', { longitude, latitude, height });
+        // console.log('模型中心经纬度:', { longitude, latitude, height });
 
-        // 可视化标记
-        this.addCenterMarker(longitude, latitude, height);
+        // // 可视化标记
+        // this.addCenterMarker(longitude, latitude, height);
 
     
         //const translation = new Cesium.Cartesian3(-50, 100, 70);
@@ -308,7 +308,7 @@ export default {
         alert(error);
       } 
     },
-    /* -----------------------------------线路图---------------------------------------- */
+    /* -----------------------------------公交图弹窗---------------------------------------- */
     toggleBusSchedule() {
       this.showBusSchedule = true;
       this.resetImageView();
@@ -438,62 +438,61 @@ export default {
       this.imagePosition.x = Math.min(maxX, Math.max(minX, this.imagePosition.x));
       this.imagePosition.y = Math.min(maxY, Math.max(minY, this.imagePosition.y));
     },
-
-    addCenterMarker(lon, lat, height) {
-      const viewer = window.viewer;
+/* -----------------------------------经纬度信息---------------------------------------- */
+    // addCenterMarker(lon, lat, height) {
+    //   const viewer = window.viewer;
       
-      // 红色点标记
-      viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(lon, lat, height),
-        point: {
-          color: Cesium.Color.RED,
-          pixelSize: 10,
-          outlineColor: Cesium.Color.WHITE,
-          outlineWidth: 2
-        },
-        label: {
-          text: `模型中心点\n经度: ${lon.toFixed(6)}°\n纬度: ${lat.toFixed(6)}°\n高程: ${height.toFixed(2)}米`,
-          font: '14px sans-serif',
-          fillColor: Cesium.Color.WHITE,
-          backgroundColor: Cesium.Color.fromCssColorString('#00000080'),
-          showBackground: true,
-          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          pixelOffset: new Cesium.Cartesian2(0, -20)
-        }
-      });
-    },
-
-    ShowPosition() { // 鼠标悬停经纬度
-      const handler = new Cesium.ScreenSpaceEventHandler(); // 监听窗口的左键点击事件
-      handler.setInputAction(function (movement) {
-        const ray = window.viewer.camera.getPickRay(movement.endPosition);
-        const position = window.viewer.scene.globe.pick(ray, window.viewer.scene);
+    //   // 红色点标记
+    //   viewer.entities.add({
+    //     position: Cesium.Cartesian3.fromDegrees(lon, lat, height),
+    //     point: {
+    //       color: Cesium.Color.RED,
+    //       pixelSize: 10,
+    //       outlineColor: Cesium.Color.WHITE,
+    //       outlineWidth: 2
+    //     },
+    //     label: {
+    //       text: `模型中心点\n经度: ${lon.toFixed(6)}°\n纬度: ${lat.toFixed(6)}°\n高程: ${height.toFixed(2)}米`,
+    //       font: '14px sans-serif',
+    //       fillColor: Cesium.Color.WHITE,
+    //       backgroundColor: Cesium.Color.fromCssColorString('#00000080'),
+    //       showBackground: true,
+    //       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+    //       pixelOffset: new Cesium.Cartesian2(0, -20)
+    //     }
+    //   });
+    // },
+    // ShowPosition() { // 鼠标悬停经纬度
+    //   const handler = new Cesium.ScreenSpaceEventHandler(); // 监听窗口的左键点击事件
+    //   handler.setInputAction(function (movement) {
+    //     const ray = window.viewer.camera.getPickRay(movement.endPosition);
+    //     const position = window.viewer.scene.globe.pick(ray, window.viewer.scene);
         
-        if (Cesium.defined(position)) {
-            const cartographic = Cesium.Cartographic.fromCartesian(position);
+    //     if (Cesium.defined(position)) {
+    //         const cartographic = Cesium.Cartographic.fromCartesian(position);
             
-            const longitude = Cesium.Math.toDegrees(cartographic.longitude).toFixed(6);
-            const latitude = Cesium.Math.toDegrees(cartographic.latitude).toFixed(6);
-            const height = cartographic.height.toFixed(2);
+    //         const longitude = Cesium.Math.toDegrees(cartographic.longitude).toFixed(6);
+    //         const latitude = Cesium.Math.toDegrees(cartographic.latitude).toFixed(6);
+    //         const height = cartographic.height.toFixed(2);
 
-            document.getElementById('showCoordinates').innerText = `${longitude} , ${latitude} , ${height}`;
-        }
-      },
-      Cesium.ScreenSpaceEventType.MOUSE_MOVE)
-    },
-
+    //         document.getElementById('showCoordinates').innerText = `${longitude} , ${latitude} , ${height}`;
+    //     }
+    //   },
+    //   Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+    // },
+/* -----------------------------------水体---------------------------------------- */
     addWater() { // 水体
       try {
         const waterMaterial = new Cesium.Material({
           fabric: {
             type: 'Water',
             uniforms: {
-              baseWaterColor: new Cesium.Color(0.0, 0.25, 0.3, 0.9), // 水体颜色
+              baseWaterColor: new Cesium.Color(0.1, 0.25, 0.3, 0.9), // 水体颜色
               normalMap: '/Textures/norm0001.png', // 法线贴图
               frequency: 100, // 水面波纹频率 
               animationSpeed: 0.001, // 水面波动动画速率
-              amplitude: 20, // 水面波动幅度
-              specularIntensity: 2.0, // 水面反射强度
+              amplitude: 10, // 水面波动幅度
+              specularIntensity: 1.0, // 水面反射强度
             }
           }
         });
@@ -537,7 +536,7 @@ export default {
         console.error('添加水体时发生错误:', error);
       }
     },
-
+/* -----------------------------------公交线路流动线---------------------------------------- */
     async addBusLine() { // 添加公交线路
       try {
         const viewer = window.viewer;
