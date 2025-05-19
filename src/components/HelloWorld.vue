@@ -278,7 +278,7 @@ export default {
 
         // 设置模型的位置，确保它出现在正确的经纬度上
           tileset.modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
-            Cesium.Cartesian3.fromDegrees(120.0117800036, 30.2113431735, 2)
+            Cesium.Cartesian3.fromDegrees(120.0117800036, 30.2113431735, 5)
            );
 
         // // 等待模型完全加载
